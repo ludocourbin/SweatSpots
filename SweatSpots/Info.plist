@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <!-- For using location services only while the app is in the foreground -->
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>We need your location to show nearby outdoor workout spots.</string>
+
+    <!-- For using location services at all times, even when the app is in the background -->
+    <!-- (You might not need this one if you're only using location when the app is active) -->
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>We need your location to provide real-time workout spot updates even when the app is in the background.</string>
+
+    <!-- If using "Always" location services, this key specifies the reason for the first time location access -->
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>We need your location to show outdoor workout spots and provide real-time updates.</string>
+</dict>
+</plist>
