@@ -11,6 +11,7 @@ import SwiftUI
 
 struct MapView: View {
     @ObservedObject var mapViewModel = MapViewModel()
+    @StateObject var network = Network()
     private let locationManager = CLLocationManager()
     let geocoder = CLGeocoder()
 
@@ -82,6 +83,7 @@ struct MapView: View {
                 )
             })
             .onChange(of: mapSelection) { _, newValue in
+                guard network.connected else { return }
                 showDetails = newValue != nil
                 fetchLookAroundPreview()
             }

@@ -40,10 +40,7 @@ class WorkoutSpotService {
     }
     
     func fetchDataFor(country: String, completion: @escaping ([WorkoutSpot]) -> Void) {
-        print("Trying to fetch data for country: \(country)")
         if let storedData = UserDefaults.standard.data(forKey: country) {
-            print("Stored data for \(country): \(storedData)")
-            
             do {
                 let decodedData = try JSONDecoder().decode([WorkoutSpot].self, from: storedData)
                 completion(decodedData)
@@ -53,8 +50,6 @@ class WorkoutSpotService {
             }
         }
             
-        print("I DIDN'T GET THE DATA for \(country)")
-            
         let query = spotsCollection.whereField("country", isEqualTo: country)
         query.getDocuments { snapshot, error in
             
@@ -63,11 +58,9 @@ class WorkoutSpotService {
             }
             
             if let documents = snapshot?.documents {
-                print("Fetched \(documents.count) spots for \(country)")
                 let spots: [WorkoutSpot] = documents.compactMap { try? $0.data(as: WorkoutSpot.self) }
                 do {
                     let encodedData = try JSONEncoder().encode(spots)
-                    print("Encoded data: \(encodedData) for \(country)")
                     UserDefaults.standard.set(encodedData, forKey: country)
                     completion(spots)
                 } catch {
