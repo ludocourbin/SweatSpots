@@ -20,37 +20,21 @@ struct MapView: View {
     @State private var mapSelection: MKMapItem?
     @Namespace private var locationSpace
     @State private var viewingRegion: MKCoordinateRegion?
-    
+
     // Map Selection Detail Properties
     @State private var showDetails: Bool = false
     @State private var lookAroundScene: MKLookAroundScene?
-    
-    // Route properties
-    @State private var routeDisplaying: Bool = false
-    @State private var route: MKRoute?
-    @State private var routeDestination: MKMapItem?
-    
+
+    // Direction properties
+    @State private var showConfirmationDialog = false
+
     var body: some View {
         ZStack {
             Map(position: $cameraPosition, selection: $mapSelection, scope: locationSpace) {
                 ForEach(mapViewModel.searchResults, id: \.self) { mapItem in
-                    if routeDisplaying {
-                        if mapItem == routeDestination {
-                            let placemark = mapItem.placemark
-                            Marker(placemark.name ?? "Place", coordinate: placemark.coordinate)
-                                .tint(.blue)
-                        }
-                    } else {
-                        
-                        let placemark = mapItem.placemark
-                        Marker(placemark.name ?? "Place", coordinate: placemark.coordinate)
-                            .tint(.blue)
-                    }
-                }
-                
-                if let route {
-                    MapPolyline(route.polyline)
-                        .stroke(.blue, lineWidth: 7)
+                    let placemark = mapItem.placemark
+                    Marker(placemark.name ?? "Place", coordinate: placemark.coordinate)
+                        .tint(.blue)
                 }
                 UserAnnotation()
             }
@@ -65,33 +49,25 @@ struct MapView: View {
             }
             .toolbarBackground(.visible, for: .navigationBar)
             .toolbarBackground(.ultraThinMaterial, for: .navigationBar)
-            .toolbar(routeDisplaying ? .hidden : .visible, for: .navigationBar)
-            .sheet(isPresented: $showDetails, onDismiss: {
-                withAnimation(.snappy) {
-                    if let boundingRect = route?.polyline.boundingMapRect, routeDisplaying {
-                        cameraPosition = .rect(boundingRect.reducedRect(0.45))
-                    }
-                }
-            }, content: {
+            .sheet(isPresented: $showDetails, content: {
                 MapDetailsView(
                     lookAroundScene: $lookAroundScene,
                     showDetails: $showDetails,
                     mapSelection: $mapSelection,
-                    routeDisplaying: $routeDisplaying,
-                    route: $route,
-                    routeDestination: $routeDestination
+                    showConfirmationDialog: $showConfirmationDialog
                 )
             })
             .onChange(of: mapSelection) { _, newValue in
-                guard network.connected else { return }
+                guard network.connected else {
+                    showConfirmationDialog = true
+                    return
+                }
                 showDetails = newValue != nil
                 fetchLookAroundPreview()
             }
             .onAppear {
                 locationManager.requestWhenInUseAuthorization()
-                mapViewModel.searchSpots(viewingRegion: viewingRegion)
             }
-            
             VStack {
                 Button(action: {
                     mapViewModel.searchSpots(viewingRegion: viewingRegion)
@@ -105,9 +81,12 @@ struct MapView: View {
                         .shadow(radius: 10)
                 }
                 .padding(.top, 16)
-                
+
                 Spacer()
             }
+        }
+        .confirmationDialog("Get Directions", isPresented: $showConfirmationDialog, titleVisibility: .visible) {
+            DirectionsConfirmationDialogButtons(destinationCoordinate: mapSelection?.placemark.coordinate)
         }
     }
 
@@ -118,7 +97,7 @@ struct MapView: View {
                 do {
                     let latitude = mapSelection.placemark.coordinate.latitude
                     let longitude = mapSelection.placemark.coordinate.longitude
-                    let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude:longitude )
+                    let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
 
                     let request = MKLookAroundSceneRequest(coordinate: coordinate)
                     let scene = try await request.scene

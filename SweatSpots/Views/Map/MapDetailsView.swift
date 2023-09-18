@@ -8,17 +8,11 @@
 import MapKit
 import SwiftUI
 
-@available(iOS 17, *)
 struct MapDetailsView: View {
     @Binding var lookAroundScene: MKLookAroundScene?
     @Binding var showDetails: Bool
     @Binding var mapSelection: MKMapItem?
-    @Binding var routeDisplaying: Bool
-    @Binding var route: MKRoute?
-    @Binding var routeDestination: MKMapItem?
-
-    @State private var showConfirmationDialog = false
-    @State private var destinationCoordinate: CLLocationCoordinate2D?
+    @Binding var showConfirmationDialog: Bool
 
     var body: some View {
         Group {
@@ -48,7 +42,6 @@ struct MapDetailsView: View {
                 }
 
                 Button("Get Directions", action: {
-                    destinationCoordinate = mapSelection?.placemark.coordinate
                     showConfirmationDialog = true
                 })
                 .foregroundStyle(.white)
@@ -64,37 +57,7 @@ struct MapDetailsView: View {
         .presentationCornerRadius(25)
         .interactiveDismissDisabled(true)
         .confirmationDialog("Get Directions", isPresented: $showConfirmationDialog, titleVisibility: .visible) {
-            Button("Apple Maps") {
-                openAppleMapsDirections()
-            }
-            Button("Google Maps") {
-                openGoogleMapsDirections()
-            }
+            DirectionsConfirmationDialogButtons(destinationCoordinate: mapSelection?.placemark.coordinate)
         }
-    }
-
-    func fetchRoute() {}
-
-    func openAppleMapsDirections() {
-        guard let destinationCoordinate = destinationCoordinate else { return }
-        let placemark = MKPlacemark(coordinate: destinationCoordinate, addressDictionary: nil)
-        let mapItem = MKMapItem(placemark: placemark)
-        mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeWalking])
-    }
-
-    func openGoogleMapsDirections() {
-        guard let destinationCoordinate = destinationCoordinate else { return }
-        let googleMapsUrlString = "comgooglemaps://?saddr=&daddr=\(destinationCoordinate.latitude),\(destinationCoordinate.longitude)&directionsmode=walking"
-        
-        if let googleMapsUrl = URL(string: googleMapsUrlString),
-             UIApplication.shared.canOpenURL(googleMapsUrl) {
-              UIApplication.shared.open(googleMapsUrl, options: [:])
-          } else {
-              if let appStoreUrl = URL(string: "https://apps.apple.com/app/google-maps/id585027354"),
-                 UIApplication.shared.canOpenURL(appStoreUrl) {
-                  UIApplication.shared.open(appStoreUrl, options: [:])
-              }
-          }
-        
     }
 }

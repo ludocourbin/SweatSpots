@@ -73,17 +73,6 @@ class WorkoutSpotService {
         }
     }
     
-    private func getUserCountry(completion: @escaping (String) -> Void) {
-        if let location = locationManager.location {
-            geocoder.reverseGeocodeLocation(location) { placemarks, _ in
-                if let country = placemarks?.first?.country {
-                    completion(country)
-                } else {
-                    completion("France")
-                }
-            }
-        }
-    }
     
     private func computeBounds(for region: MKCoordinateRegion) -> (northBound: Double, southBound: Double, eastBound: Double, westBound: Double) {
         let northBound = region.center.latitude + region.span.latitudeDelta / 2

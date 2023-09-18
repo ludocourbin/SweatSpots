@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		813CA1732AB049B40046F596 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813CA1722AB049B40046F596 /* Network.swift */; };
+		81737A382AB618A000E86169 /* DirectionsConfirmationDialogButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81737A372AB618A000E86169 /* DirectionsConfirmationDialogButtons.swift */; };
 		81A0F7F52AA8F9CA002BC409 /* SweatSpotsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A0F7F42AA8F9CA002BC409 /* SweatSpotsApp.swift */; };
 		81A0F7F72AA8F9CA002BC409 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A0F7F62AA8F9CA002BC409 /* ContentView.swift */; };
 		81A0F7F92AA8F9CC002BC409 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81A0F7F82AA8F9CC002BC409 /* Assets.xcassets */; };
@@ -52,6 +53,7 @@
 
 /* Begin PBXFileReference section */
 		813CA1722AB049B40046F596 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		81737A372AB618A000E86169 /* DirectionsConfirmationDialogButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionsConfirmationDialogButtons.swift; sourceTree = "<group>"; };
 		81A0F7F12AA8F9CA002BC409 /* SweatSpots.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SweatSpots.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81A0F7F42AA8F9CA002BC409 /* SweatSpotsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SweatSpotsApp.swift; sourceTree = "<group>"; };
 		81A0F7F62AA8F9CA002BC409 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -194,6 +196,7 @@
 				81C442282AAC96F900A236A9 /* MapView.swift */,
 				81C4422A2AAC970100A236A9 /* MapViewModel.swift */,
 				81C4422C2AAC9A5A00A236A9 /* MapDetailsView.swift */,
+				81737A372AB618A000E86169 /* DirectionsConfirmationDialogButtons.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -304,6 +307,7 @@
 			files = (
 				813CA1732AB049B40046F596 /* Network.swift in Sources */,
 				81C442292AAC96F900A236A9 /* MapView.swift in Sources */,
+				81737A382AB618A000E86169 /* DirectionsConfirmationDialogButtons.swift in Sources */,
 				81C442212AAC8CC000A236A9 /* MKCoordinateRegionUtils.swift in Sources */,
 				81A0F7F72AA8F9CA002BC409 /* ContentView.swift in Sources */,
 				81A0F7F52AA8F9CA002BC409 /* SweatSpotsApp.swift in Sources */,
@@ -450,7 +454,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SweatSpots/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SweatSpots;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "We need your location to show outdoor workout spots and provide real-time updates.";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "We need your location to provide real-time workout spot updates even when the app is in the background.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your location to show nearby outdoor workout spots.";
@@ -490,7 +494,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SweatSpots/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SweatSpots;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "We need your location to show outdoor workout spots and provide real-time updates.";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "We need your location to provide real-time workout spot updates even when the app is in the background.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your location to show nearby outdoor workout spots.";
